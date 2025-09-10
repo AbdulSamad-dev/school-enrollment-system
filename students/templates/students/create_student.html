@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <form class="well form-horizontal" method="post" id="student_form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+
+            <legend>Student Information</legend>
+
+            {% for field in form %}
+            <div class="form-group">
+                <label class="col-md-6 control-label">{{ field.label }}</label>
+                <div class="col-md-8">
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+{% endblock %}

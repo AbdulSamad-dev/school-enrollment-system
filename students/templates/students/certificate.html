@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>School Name</h1>
+    <h2>Certificate of Achievement</h2>
+    <p>This is to certify that</p>
+    <p><strong>{{ student.name }}</strong></p>
+    <p>Son/Daughter of <strong>{{ student.father_name }}</strong></p>
+    <p>Has successfully completed <strong>{{ student.current_class }}</strong> in section <strong>{{ student.section }}</strong>.</p>
+    <p>Date of Birth: <strong>{{ student.date_of_birth }}</strong></p>
+</body>
+</html>

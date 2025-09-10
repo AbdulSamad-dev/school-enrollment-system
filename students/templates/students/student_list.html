@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+           
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+               <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Students</h1>
+            </div>
+                
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Students List</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>GR No</th>
+                                        <th>Name</th>
+                                        <th>Father's Name</th>
+                                        <th>Place of Birth</th>
+                                        <th>Date of Birth</th>
+                                        <th>Caste</th>
+                                        <th>Religion</th>
+                                        <th>Previous School</th>
+                                        <th>Admission Class</th>
+                                        <th>Date of Admission</th>
+                                        <th>Last School GR No</th>
+                                        <th>Date of School Leaving</th>
+                                        <th>Last Class Studied</th>
+                                        <th>Reason of Leaving School</th>
+                                        <th>Remarks</th>
+                                        <th>Image</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>                      
+                                    <tr>
+                                        <th>GR No</th>
+                                        <th>Name</th>
+                                        <th>Father's Name</th>
+                                        <th>Place of Birth</th>
+                                        <th>Date of Birth</th>
+                                        <th>Caste</th>
+                                        <th>Religion</th>
+                                        <th>Previous School</th>
+                                        <th>Admission Class</th>
+                                        <th>Date of Admission</th>
+                                        <th>Last School GR No</th>
+                                        <th>Date of School Leaving</th>
+                                        <th>Class in which Studying & Since When</th>
+                                        <th>Reason of Leaving School</th>
+                                        <th>Remarks</th>
+                                        <th>Image</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for student in students %}
+                                    <tr>
+                                        <td>{{ student.GR_no }}</td>
+                                        <td>{{ student.name }}</td>
+                                        <td>{{ student.father_name }}</td>
+                                        <td>{{ student.place_of_birth }}</td>
+                                        <td>{{ student.date_of_birth }}</td>
+                                        <td>{{ student.caste }}</td>
+                                        <td>{{ student.religion }}</td>
+                                        <td>{{ student.previous_school }}</td>
+                                        <td>{{ student.admission_class }}</td>
+                                        <td>{{ student.date_of_admission }}</td>
+                                        <td>{{ student.previous_school_GR_no }}</td>
+                                        <td>{{ student.date_of_school_leaving }}</td>
+                                        <td>{{ student.last_class_studied }}</td>
+                                        <td>{{ student.reason_of_school_leaving }}</td>
+                                        <td>{{ student.remarks }}</td>
+                                        <td>
+                                            {% if student.image %}
+                                                <img src="{{ student.image.url }}" alt="Profile Image" style="width: 150px; height: auto;">
+                                            {% else %}
+                                                <p>No image available.</p>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a class="badge badge-info" href="{% url 'update_student' student.GR_no %}">Edit</a> |
+                                            <a class="badge badge-danger" href="{% url 'delete_student' student.GR_no %}">Delete</a>
+                                            <a class="badge badge-success" href="{% url 'download_character_certificate' student.GR_no %}">Download Character Certificate </a>
+                                            <a class="badge badge-primary" href="{% url 'download_leaving_certificate' student.GR_no %}">Download Leaving Certificate</a>
+                                            <a class="badge badge-dark" href="{% url 'download_tesimonial_certificate' student.GR_no %}">Download Testimonial Certificate</a>
+
+                                        </td> 
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+       
+
+    </div>
+{% endblock %}

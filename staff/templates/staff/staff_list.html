@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Staff</h1>
+                </div>
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Staff List</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Personal Number</th>
+                                        <th>Name</th>
+                                        <th>Designation</th>                                       
+                                        <th>Contact Number</th>
+                                        <th>Duration</th>
+                                        <th>Image</th>
+                                        <th>Actions</th> <!-- New column for actions -->
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Personal Number</th>
+                                        <th>Name</th>
+                                        <th>Designation</th>
+                                        <th>Contact Number</th>
+                                        <th>Duration </th>
+                                        <th>Image</th>
+                                        <th>Actions</th> <!-- New column for actions -->
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for staff in staff_members %}
+                                    <tr>
+                                        <td>{{ staff.personal_number }}</td>
+                                        <td>{{ staff.name }}</td>
+                                        <td>{{ staff.designation }}</td>
+                                        <td>{{ staff.contact_number }}</td>
+                                        <td>
+                                            {% if staff.date_of_school_leaving %}
+                                                {{ staff.date_of_school_joining }} - {{ staff.date_of_school_leaving }}
+                                            {% else %}
+                                                {{ staff.date_of_school_joining }}<br>
+                                                (Ongoing)
+                                            {% endif %}
+                                        </td>
+                                        
+                                        <td>
+                                            {% if staff.image %}
+                                                <img src="{{ staff.image.url }}" alt="Profile Image" style="width: 150px; height: auto;">
+                                            {% else %}
+                                                <p>No image available.</p>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <!-- Edit and Delete buttons -->
+                                            <a href="{% url 'update_staff' staff.personal_number %}" class="btn btn-warning btn-sm">Edit</a>
+                                            <a href="{% url 'delete_staff' staff.personal_number %}" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+    </div>
+{% endblock %}

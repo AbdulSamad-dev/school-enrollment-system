@@ -1,0 +1,23 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff
+*.log
+local_settings.py
+
+# Media & static
+media/
+staticfiles/
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Environment variables
+*.env
+
+# SQLite database (⚠️ usually ignored, but you want to keep it)
+# db.sqlite3   <-- DO NOT put this line if you want your DB uploaded

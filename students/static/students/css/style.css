@@ -1,0 +1,6 @@
+.logo-icon {
+    width: 40px; /* Adjust width as needed */
+    height: 40px; /* Adjust height as needed */
+    object-fit: cover; /* Ensures the image fits well within the circle */
+    border-radius: 50%; /* Makes the image rounded */
+}

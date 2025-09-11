@@ -87,18 +87,33 @@ def draw_mixed_text(p, x, y, parts, size=14, font="Helvetica", bold_font="Helvet
         p.drawString(current_x, y, text)
         current_x += p.stringWidth(text, bold_font if is_bold else font, size)
 
-# Helper function: Centered Image
-def draw_centered_image(p, path, y, width, height):
+
+from reportlab.lib.utils import ImageReader
+
+# Helper function: Centered Image with optional horizontal shift
+def draw_centered_image(p, path, y, width, height, x_offset=0):
     """
-    Draws an image horizontally centered on the PDF page.
+    Draws an image horizontally centered on the PDF page,
+    with optional left/right offset.
+    :param p: reportlab canvas
+    :param path: image file path
+    :param y: vertical position from bottom
+    :param width: desired image width
+    :param height: desired image height
+    :param x_offset: +ve = move right, -ve = move left
     """
     if os.path.exists(path):
-        image = ImageReader(path)
-        page_width, _ = A4
-        x_center = (page_width - width) / 2
-        p.drawImage(image, x_center, y,
-                    width=width, height=height,
-                    preserveAspectRatio=True, mask='auto')
+        try:
+            image = ImageReader(path)
+            page_width, _ = A4
+            x_center = (page_width - width) / 2 + x_offset
+            p.drawImage(image, x_center, y,
+                        width=width, height=height,
+                        preserveAspectRatio=True, mask='auto')
+        except Exception as e:
+            print("Image drawing error:", e)
+
+
 def draw_justified_text(p, x, y, text, width, size=14, font="Times-Italic", line_height=None):
     """
     Draws justified text on the PDF canvas with proper line wrapping and adjustable line spacing.
@@ -367,16 +382,24 @@ def download_leaving_certificate(request, GR_no):
     draw_underlined_text(p, 0, page_height - 50, "GOVERNMENT HIGH SCHOOL THARI(CAMPUS)", size=22, font="Times-Bold", center=True)
 
     logo_path = os.path.join(settings.BASE_DIR, 'students', 'static', 'students', 'images', 'logo.png')
+    
+    if student.image and student.image.name:
+        profile_image_path = student.image.path
+    else:
+        profile_image_path = os.path.join(settings.BASE_DIR, 'students', 'static', 'students', 'images', 'default-image.png')
+
 
     # Certificate Title
     draw_underlined_text(p, 0, page_height - 170, "SCHOOL LEAVING CERTIFICATE", size=20, font="Helvetica-Bold", center=True)
     
     # G.R No (left-aligned, just below)
     draw_underlined_text(p, 60, page_height - 200, f"G.R No: {student.GR_no}", size=12, font="Helvetica-Bold", center=False)
-   
-  
+    
     # Logo
     draw_centered_image(p, logo_path, y=page_height - 180, width=150, height=150)
+
+    #profile image
+    draw_centered_image(p, profile_image_path, y=page_height - 290, width=100, height=100, x_offset=200)
 
     # Print ALL student fields instead of certificate text
     data = model_to_dict(student)

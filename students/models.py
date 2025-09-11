@@ -30,6 +30,7 @@ class Student(models.Model):
     last_class_studied = models.CharField(max_length=500,blank=True, null=True)
     reason_of_school_leaving = models.CharField(max_length=200, blank=True, null=True)
     exam_type = models.CharField(max_length=50, choices=[('Annual', 'Annual'), ('Supplementary', 'Supplementary')],  default='Annual')
+    student_type = models.CharField(max_length=50, choices=[('Regular', 'Regular'), ('Private', 'Private')],  default='Regular')
     exam_year = models.CharField(max_length=50, blank=True, null=True)
     exam_month = models.CharField(max_length=50, blank=True, null=True)
     grade = models.CharField(max_length=50, blank=True, null=True)

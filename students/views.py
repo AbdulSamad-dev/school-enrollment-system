@@ -515,7 +515,7 @@ def download_tesimonial_certificate(request, GR_no):
     f" S/O {student.father_name}, Surname {student.caste},"
     f" Has appeared in the Secondary School Certificate Part II {student.exam_type}"
     f" Examination {student.exam_year} under seat no {student.seat_no} Group {student.section}"
-    f" from this School Regular/Private student conducted by the Board of Intermediate and"
+    f" from this School {student.student_type} student conducted by the Board of Intermediate and"
     f" Secondary Education Hyderabad in the month of {student.exam_month} and  was"
     f" placed Successful With Grade '{student.grade}'\n \n"
     f" His/Her date of birth according to General Register is {dob_formatted} \n"

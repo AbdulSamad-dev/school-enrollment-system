@@ -69,6 +69,43 @@ def normal(text):
     """Return a tuple marking this text as normal."""
     return (text, False)
 
+
+
+from reportlab.lib.utils import ImageReader
+import os
+
+def draw_watermark(p, image_path, page_width, page_height, opacity=0.1, size=400):
+    """
+    Draws a watermark image in the center of the PDF page.
+
+    Parameters:
+    - p: ReportLab canvas object
+    - image_path: Path to the watermark image
+    - page_width, page_height: Dimensions of the page
+    - opacity: Transparency of the watermark (0.0 to 1.0)
+    - size: Width of watermark image (height will scale automatically)
+    """
+    if os.path.exists(image_path):
+        from reportlab.pdfgen import canvas
+        # Save current state
+        p.saveState()
+
+        # Set transparency
+        p.setFillAlpha(opacity)
+
+        # Calculate x, y for center position
+        x = (page_width - size) / 2
+        y = (page_height - size) / 2
+
+        # Draw image
+        watermark = ImageReader(image_path)
+        p.drawImage(watermark, x, y, width=size, height=size, preserveAspectRatio=True, mask='auto')
+
+        # Restore state (important, so following text/images are normal)
+        p.restoreState()
+
+
+
 def draw_mixed_text(p, x, y, parts, size=14, font="Helvetica", bold_font="Helvetica-Bold"):
     """
     Draws text with bold and normal parts.
@@ -231,7 +268,7 @@ def download_character_certificate(request, GR_no):
    
   
     # Logo
-    draw_centered_image(p, logo_path, y=page_height - 180, width=150, height=150)
+    draw_centered_image(p, logo_path, y=page_height - 80, width=150, height=150)
 
  
 
@@ -383,6 +420,9 @@ def download_leaving_certificate(request, GR_no):
 
     logo_path = os.path.join(settings.BASE_DIR, 'students', 'static', 'students', 'images', 'logo.png')
     
+    draw_watermark(p, logo_path, page_width, page_height, opacity=0.1, size=900)
+
+    
     if student.image and student.image.name:
         profile_image_path = student.image.path
     else:
@@ -399,7 +439,7 @@ def download_leaving_certificate(request, GR_no):
     draw_centered_image(p, logo_path, y=page_height - 180, width=150, height=150)
 
     #profile image
-    draw_centered_image(p, profile_image_path, y=page_height - 290, width=100, height=100, x_offset=200)
+    draw_centered_image(p, profile_image_path, y=page_height - 290, width=100, height=100, x_offset=210)
 
     # Print ALL student fields instead of certificate text
     data = model_to_dict(student)

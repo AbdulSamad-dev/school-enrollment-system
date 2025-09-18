@@ -447,10 +447,10 @@ def download_leaving_certificate(request, GR_no):
     date_in_figures =  date_to_words(dob_formatted)
     
     fields_to_print = [
-        ("Name of Student", student.name),
-        ("Father's Name", student.father_name),
-        ("Religion", student.religion),
-        ("Caste/Surname", student.caste),
+        ("Name of Student", student.name.upper()),
+        ("Father's Name", student.father_name.upper()),
+        ("Religion", student.religion.upper()),
+        ("Caste/Surname", student.caste.upper()),
         ("Place of Birth", student.place_of_birth),
         ("Date of Birth", dob_formatted),
         ("Date of Birth (in words)", date_in_figures),
@@ -533,6 +533,8 @@ def download_tesimonial_certificate(request, GR_no):
 
     logo_path = os.path.join(settings.BASE_DIR, 'students', 'static', 'students', 'images', 'logo.png')
 
+    draw_watermark(p, logo_path, page_width, page_height, opacity=0.1, size=900)
+
     # Certificate Title
     draw_underlined_text(p, 0, page_height - 170, "TESTIMONIAL CERTIFICATE", size=20, font="Helvetica-Bold", center=True)
     
@@ -567,8 +569,8 @@ def download_tesimonial_certificate(request, GR_no):
     # session = f"{last_year} - {current_year}"  
      
     certificate_text = (
-    f"       This is to certify that Mr./Mrs. {student.name}"
-    f" S/O {student.father_name}, Surname {student.caste},"
+    f"       This is to certify that Mr./Mrs. {student.name.upper()}"
+    f" S/O {student.father_name.upper()}, Surname {student.caste.upper()},"
     f" Has appeared in the Secondary School Certificate Part II {student.exam_type}"
     f" Examination {student.exam_year} under seat no {student.seat_no} Group {student.section}"
     f" from this School {student.student_type} student conducted by the Board of Intermediate and"
